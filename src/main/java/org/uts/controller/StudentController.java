@@ -19,13 +19,17 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class StudentController {
 
     public void enrolRandomSubject(Student student) throws IOException {
+        final List<Subject> subjectList = student.getEnrolledSubjects();
+        if (subjectList.size() == 4) {
+            System.out.println(colorize("\t\tStudents are allowed to enrol in 4 subjects only", Attribute.RED_TEXT()));
+            return;
+        }
         Subject subject = new Subject();
         subject.setSubjectID(generateSubjectID());
         final int subjectMark = generateSubjectMark();
         subject.setSubjectMark(subjectMark);
         final String subjectGrade = convertSubjectMarkToGrade(subjectMark);
         subject.setSubjectGrade(subjectGrade);
-        List<Subject> subjectList = student.getEnrolledSubjects();
         subjectList.add(subject);
         student.setEnrolledSubjects(subjectList);
         DatabaseController.updateStudent(student);
@@ -135,7 +139,7 @@ public class StudentController {
                 final List<Subject> enrolledSubjects = loginStudent.getEnrolledSubjects();
                 System.out.println(colorize(String.format("\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.YELLOW_TEXT()));
                 for (Subject subject : enrolledSubjects) {
-                    System.out.println(colorize(String.format("\t\t[ Subject::%s -- mark = %s -- grade = %s ]", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade()), Attribute.YELLOW_TEXT()));
+                    System.out.println(colorize(String.format("\t\t[ Subject::%s -- mark = %s -- grade = %s ]", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade()), Attribute.WHITE_TEXT()));
                 }
             } else if (input.equals("x")) {
                 break;
