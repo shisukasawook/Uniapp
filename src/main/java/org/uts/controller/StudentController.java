@@ -33,7 +33,7 @@ public class StudentController {
         subjectList.add(subject);
         student.setEnrolledSubjects(subjectList);
         DatabaseController.updateStudent(student);
-        System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectMark()), Attribute.YELLOW_TEXT()));
+        System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
     }
 
     public String convertSubjectMarkToGrade(int score) {
@@ -63,7 +63,7 @@ public class StudentController {
         // Generate a random number between 0 and 999
         int randomNumber = random.nextInt(1000);
         // Convert the random number to a string
-        return String.valueOf(randomNumber);
+        return String.format("%03d", randomNumber);
     }
 
     public Subject generateSubject() {
