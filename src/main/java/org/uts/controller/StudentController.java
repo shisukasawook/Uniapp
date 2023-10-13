@@ -18,6 +18,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class StudentController {
 
+
     public void enrolRandomSubject(Student student) throws IOException {
         final List<Subject> subjectList = student.getEnrolledSubjects();
         if (subjectList.size() == 4) {
@@ -134,12 +135,14 @@ public class StudentController {
             } else if (input.equals("e")) {
                 enrolRandomSubject(loginStudent);
             } else if (input.equals("r")) {
-                break;
+                System.out.print("\t\tRemove Subject by ID: ");
+                final String subjectID = bufferedReader.readLine();
+                loginStudent.removeSubjectByID(subjectID);
             } else if (input.equals("s")) {
                 final List<Subject> enrolledSubjects = loginStudent.getEnrolledSubjects();
                 System.out.println(colorize(String.format("\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.YELLOW_TEXT()));
                 for (Subject subject : enrolledSubjects) {
-                    System.out.println(colorize(String.format("\t\t[ Subject::%s -- mark = %s -- grade = %s ]", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade()), Attribute.WHITE_TEXT()));
+                    System.out.println(String.format("\t\t[ Subject::%s -- mark = %s -- grade = %s ]", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade()));
                 }
             } else if (input.equals("x")) {
                 break;
