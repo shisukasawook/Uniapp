@@ -64,7 +64,28 @@ public class MenuController {
                             }
                         }
 
+                    } else if (input.equals("l")) {
+                        System.out.println(colorize("\tStudent Sign In", Attribute.GREEN_TEXT()));
+                        while (true) {
+                            System.out.print("\tEmail: ");
+                            String email = bufferedReader.readLine();
+                            System.out.print("\tPassword: ");
+                            String password = bufferedReader.readLine();
+                            if (StudentController.validatePasswordPolicy(password) && StudentController.validateEmail(email)) {
+                                System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
+                                List<Student> studentList = DatabaseController.readDatabase();
+                                Student foundStudent = StudentController.findStudentByEmail(email, studentList);
+                                if (foundStudent == null || !StudentController.doPasswordsMatch(password, foundStudent.getPassword())) {
+                                    System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));
+                                    break;
+                                }
+                                break;
+                            } else {
+                                System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
+                            }
+                        }
                     }
+
                 }
             } else if (input.equals("X")) {
                 System.out.println(colorize("Thank You", Attribute.YELLOW_TEXT()));

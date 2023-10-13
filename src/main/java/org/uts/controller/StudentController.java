@@ -52,4 +52,8 @@ public class StudentController {
         }
         return null; // Return null if the student is not found
     }
+
+    public static boolean doPasswordsMatch(String password1, String password2) {
+        return password1.equals(password2);
+    }
 }
