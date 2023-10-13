@@ -18,7 +18,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class StudentController {
 
-    public void enrolRandomSubject(Student student) {
+    public void enrolRandomSubject(Student student) throws IOException {
         Subject subject = new Subject();
         subject.setSubjectID(generateSubjectID());
         final int subjectMark = generateSubjectMark();
@@ -27,6 +27,9 @@ public class StudentController {
         subject.setSubjectGrade(subjectGrade);
         List<Subject> subjectList = student.getEnrolledSubjects();
         subjectList.add(subject);
+        student.setEnrolledSubjects(subjectList);
+        DatabaseController.updateStudent(student);
+        System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectMark()), Attribute.YELLOW_TEXT()));
     }
 
     public String convertSubjectMarkToGrade(int score) {
@@ -119,26 +122,14 @@ public class StudentController {
                     } else if (!validatePasswordPolicy(newPassword)) {
                         System.out.println(colorize("\t\tIncorrect password format", Attribute.RED_TEXT()));
                     } else {
-                        final List<Student> studentList = DatabaseController.readDatabase();
-                        List<Student> filteredList = studentList.stream()
-                                .filter(student -> !student.getStudentID().equals(loginStudent.getStudentID())).collect(Collectors.toList());
                         loginStudent.setPassword(newPassword);
-                        filteredList.add(loginStudent);
-                        DatabaseController.saveDatabase(filteredList);
+                        DatabaseController.updateStudent(loginStudent);
                         break;
                     }
                 }
             } else if (input.equals("e")) {
-                final Subject subject = generateSubject();
-                final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
-                subjectList.add(subject);
-                loginStudent.setEnrolledSubjects(subjectList);
-                System.out.println(colorize(String.format("\t\tEnrolling in", subject), Attribute.YELLOW_TEXT()));
-
-                break;
+                enrolRandomSubject(loginStudent);
             } else if (input.equals("r")) {
-
-
                 break;
             } else if (input.equals("s")) {
                 final List<Subject> enrolledSubjects = loginStudent.getEnrolledSubjects();

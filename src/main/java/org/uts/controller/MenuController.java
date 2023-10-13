@@ -39,29 +39,27 @@ public class MenuController {
                         System.out.println(colorize("\tStudent Sign Up", Attribute.GREEN_TEXT()));
                         while (true) {
                             System.out.print("\tEmail: ");
-                            String email = bufferedReader.readLine();
+                            final String email = bufferedReader.readLine();
                             System.out.print("\tPassword: ");
-                            String password = bufferedReader.readLine();
+                            final String password = bufferedReader.readLine();
                             if (studentController.validatePasswordPolicy(password) && studentController.validateEmail(email)) {
                                 System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
-                                List<Student> studentList = DatabaseController.readDatabase();
-                                Student foundStudent = studentController.findStudentByEmail(email, studentList);
+                                final List<Student> studentList = DatabaseController.readDatabase();
+                                final Student foundStudent = studentController.findStudentByEmail(email, studentList);
                                 if (foundStudent != null) {
                                     System.out.println(colorize(String.format("\tStudent %s %s already Exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.RED_TEXT()));
                                     break;
                                 }
                                 System.out.print("\tName: ");
-                                String name = bufferedReader.readLine();
-                                Student student = new Student();
+                                final String name = bufferedReader.readLine();
+                                final Student student = new Student();
                                 student.setStudentID(studentController.randomStudentID());
                                 student.setEmail(email);
                                 student.setPassword(password);
                                 student.setFirstName(name.split(" ")[0]);
                                 student.setLastName(name.split(" ")[1]);
                                 student.setEnrolledSubjects(new ArrayList<Subject>());
-                                //List<Student> studentList = DatabaseController.readDatabase();
-                                studentList.add(student);
-                                DatabaseController.saveDatabase(studentList);
+                                DatabaseController.updateStudent(student);
                                 System.out.println(colorize("\tEnrolling Student " + name, Attribute.YELLOW_TEXT()));
                                 break;
                             } else {
@@ -73,13 +71,13 @@ public class MenuController {
                         System.out.println(colorize("\tStudent Sign In", Attribute.GREEN_TEXT()));
                         while (true) {
                             System.out.print("\tEmail: ");
-                            String email = bufferedReader.readLine();
+                            final String email = bufferedReader.readLine();
                             System.out.print("\tPassword: ");
-                            String password = bufferedReader.readLine();
+                            final String password = bufferedReader.readLine();
                             if (studentController.validatePasswordPolicy(password) && studentController.validateEmail(email)) {
                                 System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
-                                List<Student> studentList = DatabaseController.readDatabase();
-                                Student foundStudent = studentController.findStudentByEmail(email, studentList);
+                                final List<Student> studentList = DatabaseController.readDatabase();
+                                final Student foundStudent = studentController.findStudentByEmail(email, studentList);
                                 if (foundStudent == null || !studentController.doPasswordsMatch(password, foundStudent.getPassword())) {
                                     System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));
                                     break;
