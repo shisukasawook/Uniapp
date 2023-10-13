@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Subject {
-
     private String subjectID;
     private Integer subjectMark;
     private String subjectGrade;
-
 }

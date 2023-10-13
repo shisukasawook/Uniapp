@@ -13,9 +13,10 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class MenuController {
 
     public static void displayMenu() throws IOException {
+        final StudentController studentController = new StudentController();
         while (true) {
             System.out.print(colorize("University System: (A)dmin, (S)tudent, or X : ", Attribute.BLUE_TEXT()));
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             String input = bufferedReader.readLine();
             if (input.equals("A")) {
                 while (true) {
@@ -24,6 +25,7 @@ public class MenuController {
                     if (input.equals("x")) {
                         break;
                     }
+                    break;
                 }
             } else if (input.equals("S")) {
                 while (true) {
@@ -38,10 +40,10 @@ public class MenuController {
                             String email = bufferedReader.readLine();
                             System.out.print("\tPassword: ");
                             String password = bufferedReader.readLine();
-                            if (StudentController.validatePasswordPolicy(password) && StudentController.validateEmail(email)) {
+                            if (studentController.validatePasswordPolicy(password) && studentController.validateEmail(email)) {
                                 System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
                                 List<Student> studentList = DatabaseController.readDatabase();
-                                Student foundStudent = StudentController.findStudentByEmail(email, studentList);
+                                Student foundStudent = studentController.findStudentByEmail(email, studentList);
                                 if (foundStudent != null) {
                                     System.out.println(colorize(String.format("\tStudent %s %s already Exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.RED_TEXT()));
                                     break;
@@ -49,7 +51,7 @@ public class MenuController {
                                 System.out.print("\tName: ");
                                 String name = bufferedReader.readLine();
                                 Student student = new Student();
-                                student.setStudentID(StudentController.randomStudentID());
+                                student.setStudentID(studentController.randomStudentID());
                                 student.setEmail(email);
                                 student.setPassword(password);
                                 student.setFirstName(name.split(" ")[0]);
@@ -71,15 +73,15 @@ public class MenuController {
                             String email = bufferedReader.readLine();
                             System.out.print("\tPassword: ");
                             String password = bufferedReader.readLine();
-                            if (StudentController.validatePasswordPolicy(password) && StudentController.validateEmail(email)) {
+                            if (studentController.validatePasswordPolicy(password) && studentController.validateEmail(email)) {
                                 System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
                                 List<Student> studentList = DatabaseController.readDatabase();
-                                Student foundStudent = StudentController.findStudentByEmail(email, studentList);
-                                if (foundStudent == null || !StudentController.doPasswordsMatch(password, foundStudent.getPassword())) {
+                                Student foundStudent = studentController.findStudentByEmail(email, studentList);
+                                if (foundStudent == null || !studentController.doPasswordsMatch(password, foundStudent.getPassword())) {
                                     System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));
                                     break;
                                 }
-                                System.out.print(colorize("\t\tStudent Course Menu (c/e/r/s/x) : ", Attribute.BLUE_TEXT()));
+                                studentController.start(foundStudent);
                                 break;
                             } else {
                                 System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
@@ -96,7 +98,6 @@ public class MenuController {
                 System.out.println("A = Admin System");
                 System.out.println("S = Student System");
                 System.out.println("X = Exit");
-                break;
             }
         }
     }
