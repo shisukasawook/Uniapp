@@ -26,6 +26,7 @@ public class DatabaseController {
         for(Student student: studentList) {
             writer.write(objectMapper.writeValueAsString(student));
             writer.write("\n");
+            
         }
         writer.close();
     }
