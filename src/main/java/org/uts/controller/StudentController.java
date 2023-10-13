@@ -85,7 +85,7 @@ public class StudentController {
     }
 
     public boolean validatePasswordPolicy(String password) {
-        Pattern pattern = Pattern.compile("^[A-Z][A-Za-z][A-Za-z][A-Za-z][A-Za-z][A-Za-z].*[0-9][0-9][0-9]+$");
+        Pattern pattern = Pattern.compile("^[A-Z][A-Za-z]{5,}[0-9]{3,}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.find();
     }
