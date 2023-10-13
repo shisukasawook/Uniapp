@@ -79,6 +79,7 @@ public class MenuController {
                                     System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));
                                     break;
                                 }
+                                System.out.print(colorize("\t\tStudent Course Menu (c/e/r/s/x) : ", Attribute.BLUE_TEXT()));
                                 break;
                             } else {
                                 System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
