@@ -2,10 +2,12 @@ package org.uts.controller;
 
 import com.diogonunes.jcolor.Attribute;
 import org.uts.model.Student;
+import org.uts.model.Subject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -56,6 +58,7 @@ public class MenuController {
                                 student.setPassword(password);
                                 student.setFirstName(name.split(" ")[0]);
                                 student.setLastName(name.split(" ")[1]);
+                                student.setEnrolledSubjects(new ArrayList<Subject>());
                                 //List<Student> studentList = DatabaseController.readDatabase();
                                 studentList.add(student);
                                 DatabaseController.saveDatabase(studentList);
