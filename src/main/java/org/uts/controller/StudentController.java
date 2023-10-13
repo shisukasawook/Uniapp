@@ -12,7 +12,6 @@ import java.util.Random;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
