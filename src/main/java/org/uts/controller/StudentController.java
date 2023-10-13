@@ -134,6 +134,9 @@ public class StudentController {
             } else if (input.equals("s")) {
                 final List<Subject> enrolledSubjects = loginStudent.getEnrolledSubjects();
                 System.out.println(colorize(String.format("\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.YELLOW_TEXT()));
+                for (Subject subject : enrolledSubjects) {
+                    System.out.println(colorize(String.format("\t\t[ Subject::%s -- mark = %s -- grade = %s ]", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade()), Attribute.YELLOW_TEXT()));
+                }
             } else if (input.equals("x")) {
                 break;
             }
