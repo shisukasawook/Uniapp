@@ -20,11 +20,51 @@ public class StudentController {
 
     public void enrolRandomSubject(Student student) {
         Subject subject = new Subject();
+        subject.setSubjectID(generateSubjectID());
+        final int subjectMark = generateSubjectMark();
+        subject.setSubjectMark(subjectMark);
+        final String subjectGrade = convertSubjectMarkToGrade(subjectMark);
+        subject.setSubjectGrade(subjectGrade);
+        List<Subject> subjectList = student.getEnrolledSubjects();
+        subjectList.add(subject);
+    }
+
+    public String convertSubjectMarkToGrade(int score) {
+        if (score < 0 || score > 100) {
+            return "Invalid Score";
+        } else if (score < 50) {
+            return "Z";
+        } else if (score < 65) {
+            return "P";
+        } else if (score < 75) {
+            return "C";
+        } else if (score < 85) {
+            return "D";
+        } else {
+            return "HD";
+        }
+    }
+
+    public int generateSubjectMark() {
+        Random random = new Random();
+        return random.nextInt(76) + 25; // Generates a random number between 25 and 100 (inclusive)
+    }
+
+
+    public String generateSubjectID() {
+        Random random = new Random();
+        // Generate a random number between 0 and 999
+        int randomNumber = random.nextInt(1000);
+        // Convert the random number to a string
+        return String.valueOf(randomNumber);
+    }
+
+    public Subject generateSubject() {
+        Subject subject = new Subject();
         subject.setSubjectID(String.valueOf(Math.random() * 3));
         subject.setSubjectMark((int) (Math.random() * 2));
         subject.setSubjectGrade("HD");
-        List<Subject> subjectList = student.getEnrolledSubjects();
-        subjectList.add(subject);
+        return subject;
     }
 
     public String randomStudentID() {
@@ -89,11 +129,20 @@ public class StudentController {
                     }
                 }
             } else if (input.equals("e")) {
+                final Subject subject = generateSubject();
+                final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
+                subjectList.add(subject);
+                loginStudent.setEnrolledSubjects(subjectList);
+                System.out.println(colorize(String.format("\t\tEnrolling in", subject), Attribute.YELLOW_TEXT()));
+
                 break;
             } else if (input.equals("r")) {
+
+
                 break;
             } else if (input.equals("s")) {
-                break;
+                final List<Subject> enrolledSubjects = loginStudent.getEnrolledSubjects();
+                System.out.println(colorize(String.format("\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.YELLOW_TEXT()));
             } else if (input.equals("x")) {
                 break;
             }
