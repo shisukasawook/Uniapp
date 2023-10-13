@@ -66,8 +66,14 @@ public class MenuController {
 
                     }
                 }
-            } else {
+            } else if (input.equals("X")) {
                 System.out.println(colorize("Thank You", Attribute.YELLOW_TEXT()));
+                break;
+            } else {
+                System.out.println("Menu options");
+                System.out.println("A = Admin System");
+                System.out.println("S = Student System");
+                System.out.println("X = Exit");
                 break;
             }
         }
