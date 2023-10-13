@@ -91,7 +91,7 @@ public class StudentController {
     }
 
     public boolean validateEmail(String email) {
-        Pattern pattern = Pattern.compile(".*\\..*@university.com");
+        Pattern pattern = Pattern.compile("^.*\\..*@university.com$");
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
