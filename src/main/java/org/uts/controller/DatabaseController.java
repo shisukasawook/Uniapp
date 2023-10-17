@@ -1,4 +1,5 @@
 package org.uts.controller;
+
 import org.uts.model.Student;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class DatabaseController {
 
-    private static String filename = "students.data";
+    private static final String filename = "students.data";
 
     public static void initialize() {
         try {
@@ -65,6 +66,7 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "Reading Error", ex);
         }
     }
+
     public static void updateStudent(Student student) throws IOException {
         final List<Student> studentList = readDatabase();
         List<Student> filteredList = studentList.stream()
