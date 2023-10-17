@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.uts.controller.DatabaseController;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -16,7 +17,7 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Student extends User {
+public class Student extends User implements Serializable {
 
     private String studentID;
     private List<Subject> enrolledSubjects;

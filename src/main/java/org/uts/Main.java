@@ -16,7 +16,9 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        DatabaseController.initialize();
         MenuController.displayMenu();
+
 
 //        List<Student> tempList = StudentController.randomStudent();
 //        DatabaseController.saveDatabase(tempList);

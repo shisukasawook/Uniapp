@@ -1,29 +1,70 @@
 package org.uts.controller;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.uts.model.Student;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DatabaseController {
 
-    public static List<Student> readDatabase() throws IOException {
-        File file = new File("student.data");
-        if (!file.isFile()) {
-            file.createNewFile();
+    private static String filename = "students.data";
+
+    public static void initialize() {
+        try {
+            List<Student> students = new ArrayList<>();
+            File file = new File(filename);
+            if (!file.exists()) {
+                file.createNewFile();
+                FileOutputStream fileOut = new FileOutputStream(filename);
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(students);
+                objectOut.close();
+                fileOut.close();
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "File Not Found", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "Reading Error", ex);
         }
-        List<Student> studentList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            studentList.add(objectMapper.readValue(line, Student.class));
-        }
-        return studentList;
     }
 
+    public static List<Student> readDatabase() {
+        List<Student> students = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(filename);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            students = (List) objectIn.readObject();
+            objectIn.close();
+            fileIn.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "File Not Found", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "Reading Error", ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return students;
+    }
+
+    public static void saveDatabase(List<Student> students) {
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(students);
+            objectOut.close();
+            fileOut.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "File Not Found", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, "Reading Error", ex);
+        }
+    }
     public static void updateStudent(Student student) throws IOException {
         final List<Student> studentList = readDatabase();
         List<Student> filteredList = studentList.stream()
@@ -31,17 +72,6 @@ public class DatabaseController {
         filteredList.add(student);
         saveDatabase(filteredList);
     }
-
-    private static void saveDatabase(List<Student> studentList) throws IOException {
-        File file = new File("student.data");
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        ObjectMapper objectMapper = new ObjectMapper();
-        for (Student student : studentList) {
-            writer.write(objectMapper.writeValueAsString(student));
-            writer.write("\n");
-        }
-        writer.close();
-
-    }
-
 }
+
+
