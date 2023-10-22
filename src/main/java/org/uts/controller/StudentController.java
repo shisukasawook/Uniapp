@@ -25,54 +25,15 @@ public class StudentController {
             return;
         }
         Subject subject = new Subject();
-        subject.setSubjectID(generateSubjectID());
-        final int subjectMark = generateSubjectMark();
-        subject.setSubjectMark(subjectMark);
-        final String subjectGrade = convertSubjectMarkToGrade(subjectMark);
-        subject.setSubjectGrade(subjectGrade);
+        subject.generateSubjectID();
+        subject.generateSubjectMark();
+        subject.generateSubjectGrade();
         subjectList.add(subject);
         student.setEnrolledSubjects(subjectList);
         DatabaseController.updateStudent(student);
         System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
     }
 
-    public String convertSubjectMarkToGrade(int score) {
-        if (score < 0 || score > 100) {
-            return "Invalid Score";
-        } else if (score < 50) {
-            return "Z";
-        } else if (score < 65) {
-            return "P";
-        } else if (score < 75) {
-            return "C";
-        } else if (score < 85) {
-            return "D";
-        } else {
-            return "HD";
-        }
-    }
-
-    public int generateSubjectMark() {
-        Random random = new Random();
-        return random.nextInt(76) + 25; // Generates a random number between 25 and 100 (inclusive)
-    }
-
-
-    public String generateSubjectID() {
-        Random random = new Random();
-        // Generate a random number between 0 and 999
-        int randomNumber = random.nextInt(1000);
-        // Convert the random number to a string
-        return String.format("%03d", randomNumber);
-    }
-
-    public Subject generateSubject() {
-        Subject subject = new Subject();
-        subject.setSubjectID(String.valueOf(Math.random() * 3));
-        subject.setSubjectMark((int) (Math.random() * 2));
-        subject.setSubjectGrade("HD");
-        return subject;
-    }
 
     public String randomStudentID() {
         StringBuilder studentID = new StringBuilder();
