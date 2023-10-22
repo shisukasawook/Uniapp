@@ -22,6 +22,22 @@ public class Student extends User implements Serializable {
     private String studentID;
     private List<Subject> enrolledSubjects;
 
+    public void enrolRandomSubject() throws IOException {
+        final List<Subject> subjectList = getEnrolledSubjects();
+        if (subjectList.size() == 4) {
+            System.out.println(colorize("\t\tStudents are allowed to enrol in 4 subjects only", Attribute.RED_TEXT()));
+            return;
+        }
+        Subject subject = new Subject();
+        subject.generateSubjectID();
+        subject.generateSubjectMark();
+        subject.generateSubjectGrade();
+        subjectList.add(subject);
+        setEnrolledSubjects(subjectList);
+        DatabaseController.updateStudent(this);
+        System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
+    }
+
     public void removeSubjectByID(String id) throws IOException {
         final List<Subject> subjectList = getEnrolledSubjects();
         Subject subjectToRemove = null;

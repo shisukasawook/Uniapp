@@ -18,23 +18,6 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 public class StudentController {
 
 
-    public void enrolRandomSubject(Student student) throws IOException {
-        final List<Subject> subjectList = student.getEnrolledSubjects();
-        if (subjectList.size() == 4) {
-            System.out.println(colorize("\t\tStudents are allowed to enrol in 4 subjects only", Attribute.RED_TEXT()));
-            return;
-        }
-        Subject subject = new Subject();
-        subject.generateSubjectID();
-        subject.generateSubjectMark();
-        subject.generateSubjectGrade();
-        subjectList.add(subject);
-        student.setEnrolledSubjects(subjectList);
-        DatabaseController.updateStudent(student);
-        System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
-    }
-
-
     public String randomStudentID() {
         StringBuilder studentID = new StringBuilder();
         Random rand = new Random();
@@ -93,7 +76,7 @@ public class StudentController {
                     }
                 }
             } else if (input.equals("e")) {
-                enrolRandomSubject(loginStudent);
+                loginStudent.enrolRandomSubject();
             } else if (input.equals("r")) {
                 System.out.print("\t\tRemove Subject by ID: ");
                 final String subjectID = bufferedReader.readLine();
