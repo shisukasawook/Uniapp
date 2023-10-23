@@ -1,19 +1,39 @@
 package org.uts.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import java.io.Serializable;
 import java.util.Random;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Subject implements Serializable {
     private String subjectID;
     private Integer subjectMark;
     private String subjectGrade;
+
+    public String getSubjectID() {
+        return subjectID;
+    }
+
+    public void setSubjectID(String subjectID) {
+        this.subjectID = subjectID;
+    }
+
+    public Integer getSubjectMark() {
+        return subjectMark;
+    }
+
+    public void setSubjectMark(Integer subjectMark) {
+        this.subjectMark = subjectMark;
+    }
+
+    public String getSubjectGrade() {
+        return subjectGrade;
+    }
+
+    public void setSubjectGrade(String subjectGrade) {
+        this.subjectGrade = subjectGrade;
+    }
 
     public void generateSubjectMark() {
         Random random = new Random();

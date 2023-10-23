@@ -1,10 +1,7 @@
 package org.uts.model;
 
 import com.diogonunes.jcolor.Attribute;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
 import org.uts.controller.DatabaseController;
 
 import java.io.IOException;
@@ -13,14 +10,28 @@ import java.util.List;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+
 public class Student extends User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String studentID;
     private List<Subject> enrolledSubjects;
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    public List<Subject> getEnrolledSubjects() {
+        return enrolledSubjects;
+    }
+
+    public void setEnrolledSubjects(List<Subject> enrolledSubjects) {
+        this.enrolledSubjects = enrolledSubjects;
+    }
 
     public void enrolRandomSubject() throws IOException {
         final List<Subject> subjectList = getEnrolledSubjects();
