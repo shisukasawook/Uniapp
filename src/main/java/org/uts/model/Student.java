@@ -65,5 +65,40 @@ public class Student extends User implements Serializable {
             DatabaseController.updateStudent(this);
         }
         System.out.println(colorize(String.format("\t\tYou are now enrolled in %s out of 4 subjects", subjectList.size()), Attribute.YELLOW_TEXT()));
+
     }
-}
+
+        public double getAverageMark( ) {
+            if (enrolledSubjects.isEmpty()) {
+                return 0.0; // You can choose to return 0 or handle this case differently.
+            }
+
+            int sum = 0;
+            for (Subject subject : enrolledSubjects) {
+                sum += subject.getSubjectMark();
+            }
+
+            return (double) sum / enrolledSubjects.size();
+        }
+
+    public String getAverageGrade( ) {
+        return convertAverageMarkToGrade (getAverageMark()) ;
+    }
+
+    public String convertAverageMarkToGrade(double getAverageMark) {
+        if (getAverageMark < 0 || getAverageMark > 100) {
+            return "Invalid Score";
+        } else if (getAverageMark < 50) {
+            return "Z";
+        } else if (getAverageMark < 65) {
+            return "P";
+        } else if (getAverageMark < 75) {
+            return "C";
+        } else if (getAverageMark < 85) {
+            return "D";
+        } else {
+            return "HD";
+        }
+
+
+}}

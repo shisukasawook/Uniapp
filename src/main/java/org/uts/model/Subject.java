@@ -37,7 +37,8 @@ public class Subject implements Serializable {
 
     public void generateSubjectMark() {
         Random random = new Random();
-        setSubjectMark(random.nextInt(76) + 25); // Generates a random number between 25 and 100 (inclusive)
+        setSubjectMark(random.nextInt(76) + 25);// Generates a random number between 25 and 100 (inclusive)
+
     }
 
     public void generateSubjectID() {
@@ -49,11 +50,11 @@ public class Subject implements Serializable {
     }
 
     public void generateSubjectGrade() {
-        String grade = convertSubjectMarkToGrade(getSubjectMark());
+        String grade = convertSubjectMarkToGrade((float)getSubjectMark());
         setSubjectGrade(grade);
     }
 
-    public String convertSubjectMarkToGrade(int score) {
+    public String convertSubjectMarkToGrade(float score) {
         if (score < 0 || score > 100) {
             return "Invalid Score";
         } else if (score < 50) {
