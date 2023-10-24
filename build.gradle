@@ -11,7 +11,5 @@ repositories {
 
 dependencies {
     implementation 'com.diogonunes:JColor:5.5.1'
-
-
 }
 

@@ -93,7 +93,7 @@ public class MenuController {
 
                         Map<Boolean, List<String>> partitionedStudents = groupStudent.stream()
                                 .collect(Collectors.partitioningBy(student -> student.getAverageMark() < 65,
-                                        Collectors.mapping(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %s",
+                                        Collectors.mapping(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %.2f",
                                                 student.getFirstName(), student.getLastName(), student.getStudentID(),
                                                 student.getAverageGrade(), student.getAverageMark()), Collectors.toList())));
 
