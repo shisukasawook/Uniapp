@@ -96,7 +96,7 @@ public class StudentController {
                 break;
             } else {
                 System.out.println("\tMenu options");
-                System.out.println("\tl = login");
+                System.out.println("\tl = login.fxml");
                 System.out.println("\tr = register");
                 System.out.println("\tx = exit");
             }
