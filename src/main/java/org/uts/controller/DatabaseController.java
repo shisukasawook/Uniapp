@@ -52,7 +52,6 @@ public class DatabaseController {
     }
 
     public static void writeStudentsToDatabase(List<Student> students) {
-
         try {
             FileOutputStream fileOut = new FileOutputStream(filename);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
