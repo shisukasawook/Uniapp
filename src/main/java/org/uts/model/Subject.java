@@ -1,7 +1,4 @@
 package org.uts.model;
-
-
-
 import java.io.Serializable;
 import java.util.Random;
 

@@ -32,12 +32,12 @@ public class DatabaseController {
         }
     }
 
-    public static List<Student> readDatabase() {
+    public static List<Student> readStudentsFromDatabase() {
         List<Student> students = null;
         try {
             FileInputStream fileIn = new FileInputStream(filename);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            students = (List) objectIn.readObject();
+            students = (List<Student>) objectIn.readObject();
             objectIn.close();
             fileIn.close();
 
@@ -51,7 +51,7 @@ public class DatabaseController {
         return students;
     }
 
-    public static void saveDatabase(List<Student> students) {
+    public static void writeStudentsToDatabase(List<Student> students) {
 
         try {
             FileOutputStream fileOut = new FileOutputStream(filename);
@@ -67,12 +67,12 @@ public class DatabaseController {
         }
     }
 
-    public static void updateStudent(Student student) throws IOException {
-        final List<Student> studentList = readDatabase();
-        List<Student> filteredList = studentList.stream()
-                .filter(s -> !s.getStudentID().equals(student.getStudentID())).collect(Collectors.toList());
-        filteredList.add(student);
-        saveDatabase(filteredList);
+    public static void updateStudentToDatabase(Student updateStudent) {
+        final List<Student> students = readStudentsFromDatabase();
+        List<Student> filteredStudents = students.stream()
+                .filter(student -> !student.getStudentID().equals(updateStudent.getStudentID())).collect(Collectors.toList());
+        filteredStudents.add(updateStudent);
+        writeStudentsToDatabase(filteredStudents);
     }
 }
 

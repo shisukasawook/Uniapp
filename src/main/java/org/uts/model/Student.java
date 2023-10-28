@@ -45,7 +45,7 @@ public class Student extends User implements Serializable {
         subject.generateSubjectGrade();
         subjectList.add(subject);
         setEnrolledSubjects(subjectList);
-        DatabaseController.updateStudent(this);
+        DatabaseController.updateStudentToDatabase(this);
         System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
     }
 
@@ -62,7 +62,7 @@ public class Student extends User implements Serializable {
             System.out.println(colorize(String.format("\t\tDropping Subject-%s", subjectToRemove.getSubjectID()), Attribute.YELLOW_TEXT()));
             subjectList.remove(subjectToRemove);
             this.setEnrolledSubjects(subjectList);
-            DatabaseController.updateStudent(this);
+            DatabaseController.updateStudentToDatabase(this);
         }
         System.out.println(colorize(String.format("\t\tYou are now enrolled in %s out of 4 subjects", subjectList.size()), Attribute.YELLOW_TEXT()));
 

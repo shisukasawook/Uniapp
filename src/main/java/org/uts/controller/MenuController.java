@@ -3,7 +3,6 @@ package org.uts.controller;
 import com.diogonunes.jcolor.Attribute;
 import org.uts.model.Student;
 import org.uts.model.Subject;
-import org.uts.model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,10 +14,10 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class MenuController {
 
-    public static void displayMenu() throws IOException {
+    public static void displayMenu() throws IOException  {
         final StudentController studentController = new StudentController();
         while (true) {
-            System.out.print(colorize("University System: (A)dmin, (S)tudent, or X : ", Attribute.BLUE_TEXT()));
+            System.out.print(colorize("University System: (A)dmin, (S)tudent, or X : ", Attribute.BRIGHT_CYAN_TEXT()));
             final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             String input = bufferedReader.readLine();
             if (input.equals("A")) {
@@ -28,7 +27,7 @@ public class MenuController {
                     if (input.equals("x")) {
                         break;
                     } else if (input.equals("s")) {
-                        final List<Student> registeredStudents = DatabaseController.readDatabase();
+                        final List<Student> registeredStudents = DatabaseController.readStudentsFromDatabase();
                         System.out.println(colorize("\t\tStudent List", Attribute.YELLOW_TEXT()));
                         if (registeredStudents.isEmpty())
                             System.out.println("\t\t<Nothing to display>");
@@ -37,7 +36,7 @@ public class MenuController {
                             System.out.println(String.format("\t\t%s %s :: %s --> Email: %s ", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getEmail()));
                         }
                     } else if(input.equals("g")){
-                        final List<Student> groupStudent = DatabaseController.readDatabase();
+                        final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
                         System.out.println(colorize("\t\tGrade Grouping", Attribute.YELLOW_TEXT()));
                             HashMap <String,List<Student>> gradeStudentMap = new HashMap<>() ;
 
@@ -69,30 +68,11 @@ public class MenuController {
                         });
 
                     } else if(input.equals("p")){
-//                        final List<Student> groupStudent = DatabaseController.readDatabase();
-//                        System.out.println(colorize("\t\tPASS/FAIL Partition", Attribute.YELLOW_TEXT()));
-//
-//                        System.out.print("\t\tFAIL --> ");
-//                        List<String> failStudents = groupStudent.stream()
-//                                .filter(student -> student.getAverageMark() < 65)
-//                                .map(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %s",student.getFirstName(),student.getLastName(),student.getStudentID(),student.getAverageGrade(),student.getAverageMark()))
-//                                .collect(Collectors.toList());
-//
-//                        System.out.println(failStudents);
-//                        System.out.print("\t\tPASS --> ");
-//
-//                        List<String> passStudents = groupStudent.stream()
-//                                .filter(student -> student.getAverageMark() >= 65)
-//                                .map(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %s",student.getFirstName(),student.getLastName(),student.getStudentID(),student.getAverageGrade(),student.getAverageMark()))
-//                                .collect(Collectors.toList());
-//
-//                        System.out.println(passStudents);
-
-                        final List<Student> groupStudent = DatabaseController.readDatabase();
+                        final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
                         System.out.println(colorize("\t\tPASS/FAIL Partition", Attribute.YELLOW_TEXT()));
 
                         Map<Boolean, List<String>> partitionedStudents = groupStudent.stream()
-                                .collect(Collectors.partitioningBy(student -> student.getAverageMark() < 65,
+                                .collect(Collectors.partitioningBy(student -> student.getAverageMark() < 50,
                                         Collectors.mapping(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %.2f",
                                                 student.getFirstName(), student.getLastName(), student.getStudentID(),
                                                 student.getAverageGrade(), student.getAverageMark()), Collectors.toList())));
@@ -106,7 +86,7 @@ public class MenuController {
                      }else if(input.equals("r")){
                         System.out.print("\t\tRemove by ID: ");
                         final String studentID = bufferedReader.readLine();
-                        final List<Student> groupStudent = DatabaseController.readDatabase();
+                        final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
                         List<Student> removeStudent = groupStudent.stream()
                                 .filter(student -> !student.getStudentID().equals(studentID))
                                 .collect(Collectors.toList());
@@ -115,7 +95,7 @@ public class MenuController {
                         } else
                         {
                             System.out.println(colorize("\t\tRemoving Student " + studentID + " Account", Attribute.YELLOW_TEXT()));
-                            DatabaseController.saveDatabase(removeStudent);
+                            DatabaseController.writeStudentsToDatabase(removeStudent);
                         }
 
                     }
@@ -127,7 +107,7 @@ public class MenuController {
 
                     if (Objects.equals(confirmClear, "Y")){
                         System.out.println(colorize("\t\tStudents data cleared", Attribute.YELLOW_TEXT()));
-                        DatabaseController.saveDatabase(new ArrayList<>());
+                        DatabaseController.writeStudentsToDatabase(new ArrayList<>());
                     }
 
                 }
@@ -150,7 +130,7 @@ public class MenuController {
                             final String password = bufferedReader.readLine();
                             if (studentController.validatePasswordPolicy(password) && studentController.validateEmail(email)) {
                                 System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
-                                final List<Student> studentList = DatabaseController.readDatabase();
+                                final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
                                 final Student foundStudent = studentController.findStudentByEmail(email, studentList);
                                 if (foundStudent != null) {
                                     System.out.println(colorize(String.format("\tStudent %s %s already Exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.RED_TEXT()));
@@ -165,7 +145,7 @@ public class MenuController {
                                 student.setFirstName(name.split(" ")[0]);
                                 student.setLastName(name.split(" ")[1]);
                                 student.setEnrolledSubjects(new ArrayList<Subject>());
-                                DatabaseController.updateStudent(student);
+                                DatabaseController.updateStudentToDatabase(student);
                                 System.out.println(colorize("\tEnrolling Student " + name, Attribute.YELLOW_TEXT()));
                                 break;
                             } else {
@@ -182,7 +162,7 @@ public class MenuController {
                             final String password = bufferedReader.readLine();
                             if (studentController.validatePasswordPolicy(password) && studentController.validateEmail(email)) {
                                 System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
-                                final List<Student> studentList = DatabaseController.readDatabase();
+                                final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
                                 final Student foundStudent = studentController.findStudentByEmail(email, studentList);
                                 if (foundStudent == null || !studentController.doPasswordsMatch(password, foundStudent.getPassword())) {
                                     System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));

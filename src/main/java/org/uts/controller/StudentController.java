@@ -71,7 +71,7 @@ public class StudentController {
                         System.out.println(colorize("\t\tIncorrect password format", Attribute.RED_TEXT()));
                     } else {
                         loginStudent.setPassword(newPassword);
-                        DatabaseController.updateStudent(loginStudent);
+                        DatabaseController.updateStudentToDatabase(loginStudent);
                         break;
                     }
                 }
