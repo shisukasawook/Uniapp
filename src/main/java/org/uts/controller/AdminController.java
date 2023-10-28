@@ -85,7 +85,6 @@ public class AdminController {
         }
     }
 
-
     private void viewStudents() {
         final List<Student> registeredStudents = DatabaseController.readStudentsFromDatabase();
         System.out.println(colorize("\t\tStudent List", Attribute.YELLOW_TEXT()));

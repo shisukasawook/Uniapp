@@ -7,15 +7,98 @@ import org.uts.model.Subject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
 public class StudentController {
+
+    Scanner in;
+
+    public StudentController() {
+        in = new Scanner(System.in);
+    }
+
+    private void loginStudent() {
+        System.out.println(colorize("\tStudent Sign In", Attribute.GREEN_TEXT()));
+        while (true) {
+            System.out.print("\tEmail: ");
+            final String email = in.nextLine();
+            System.out.print("\tPassword: ");
+            final String password = in.nextLine();
+            if (validatePasswordPolicy(password) && validateEmail(email)) {
+                System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
+                final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
+                final Student foundStudent = findStudentByEmail(email, studentList);
+                if (foundStudent == null || !doPasswordsMatch(password, foundStudent.getPassword())) {
+                    System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));
+                    break;
+                }
+                try {
+                    start(foundStudent);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            } else {
+                System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
+            }
+        }
+
+    }
+
+    private void registerStudent() {
+        System.out.println(colorize("\tStudent Sign Up", Attribute.GREEN_TEXT()));
+        while (true) {
+            System.out.print("\tEmail: ");
+            final String email = in.nextLine();
+            System.out.print("\tPassword: ");
+            final String password = in.nextLine();
+            if (validatePasswordPolicy(password) && validateEmail(email)) {
+                System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
+                final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
+                final Student foundStudent = findStudentByEmail(email, studentList);
+                if (foundStudent != null) {
+                    System.out.println(colorize(String.format("\tStudent %s %s already Exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.RED_TEXT()));
+                    break;
+                }
+                System.out.print("\tName: ");
+                final String name = in.nextLine();
+                final Student student = new Student();
+                student.setStudentID(randomStudentID());
+                student.setEmail(email);
+                student.setPassword(password);
+                student.setFirstName(name.split(" ")[0]);
+                student.setLastName(name.split(" ")[1]);
+                student.setEnrolledSubjects(new ArrayList<Subject>());
+                DatabaseController.updateStudentToDatabase(student);
+                System.out.println(colorize("\tEnrolling Student " + name, Attribute.YELLOW_TEXT()));
+                break;
+            } else {
+                System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
+            }
+        }
+
+    }
+
+    public void startMenu() {
+        while (true) {
+            System.out.print(colorize("\tStudent System (l/r/x) : ", Attribute.BLUE_TEXT()));
+            String input = in.nextLine();
+            if (input.equals("l")) {
+                loginStudent();
+            } else if (input.equals("r")) {
+                registerStudent();
+            } else if (input.equals("x")) {
+                break;
+            }
+        }
+    }
 
 
     public String randomStudentID() {
@@ -85,7 +168,7 @@ public class StudentController {
                 final List<Subject> enrolledSubjects = loginStudent.getEnrolledSubjects();
                 System.out.println(colorize(String.format("\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.YELLOW_TEXT()));
                 for (Subject subject : enrolledSubjects) {
-                    System.out.println(String.format("\t\t[ Subject::%s -- mark = %s -- grade = %s ]", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade()));
+                    System.out.printf("\t\t[ Subject::%s -- mark = %s -- grade = %s ]%n", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade());
                 }
             } else if (input.equals("x")) {
                 break;
