@@ -114,6 +114,14 @@ public class AdminController {
                 viewStudents();
             } else if (input.equals("x")) {
                 break;
+            } else {
+                System.out.println("\t\tMenu options");
+                System.out.println("\t\tc = clear database file");
+                System.out.println("\t\tg = group students");
+                System.out.println("\t\tp = partition students");
+                System.out.println("\t\tr = remove student");
+                System.out.println("\t\ts = show students");
+                System.out.println("\t\tx = exit");
             }
         }
     }
