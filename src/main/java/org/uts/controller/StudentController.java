@@ -66,11 +66,16 @@ public class StudentController {
                 student.setStudentID(randomStudentID());
                 student.setEmail(email);
                 student.setPassword(password);
-                student.setFirstName(name.split(" ")[0]);
-                student.setLastName(name.split(" ")[1]);
+                final String[] splitName = name.trim().split("\\s+");
+                if (splitName.length != 2) {
+                    System.out.println(colorize("\tIncorrect format Name", Attribute.RED_TEXT()));
+                    break;
+                }
+                student.setFirstName(splitName[0]);
+                student.setLastName(splitName[1]);
                 student.setEnrolledSubjects(new ArrayList<Subject>());
                 DatabaseController.updateStudentToDatabase(student);
-                System.out.println(colorize("\tEnrolling Student " + name, Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("\tEnrolling Student " + student.getFirstName() + " " + student.getLastName(), Attribute.YELLOW_TEXT()));
                 break;
             } else {
                 System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
@@ -89,6 +94,11 @@ public class StudentController {
                 registerStudent();
             } else if (input.equals("x")) {
                 break;
+            } else {
+                System.out.println("\tMenu options");
+                System.out.println("\tl = login");
+                System.out.println("\tr = register");
+                System.out.println("\tx = exit");
             }
         }
     }
@@ -178,6 +188,13 @@ public class StudentController {
                 viewEnrolmentList(loginStudent);
             } else if (input.equals("x")) {
                 break;
+            } else {
+                System.out.println("\t\tMenu options");
+                System.out.println("\t\tc = change password");
+                System.out.println("\t\te = enrolment subject");
+                System.out.println("\t\tr = remove subject");
+                System.out.println("\t\ts = show enrolment subject");
+                System.out.println("\t\tx = exit");
             }
         }
     }

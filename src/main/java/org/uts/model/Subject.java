@@ -1,4 +1,5 @@
 package org.uts.model;
+
 import java.io.Serializable;
 import java.util.Random;
 
@@ -35,7 +36,6 @@ public class Subject implements Serializable {
     public void generateSubjectMark() {
         Random random = new Random();
         setSubjectMark(random.nextInt(76) + 25);// Generates a random number between 25 and 100 (inclusive)
-
     }
 
     public void generateSubjectID() {
@@ -43,11 +43,11 @@ public class Subject implements Serializable {
         // Generate a random number between 0 and 999
         int randomNumber = random.nextInt(1000);
         // Convert the random number to a string
-       setSubjectID(String.format("%03d", randomNumber));
+        setSubjectID(String.format("%03d", randomNumber));
     }
 
     public void generateSubjectGrade() {
-        String grade = convertSubjectMarkToGrade((float)getSubjectMark());
+        String grade = convertSubjectMarkToGrade((float) getSubjectMark());
         setSubjectGrade(grade);
     }
 

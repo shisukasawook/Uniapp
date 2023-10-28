@@ -3,7 +3,6 @@ package org.uts.model;
 import com.diogonunes.jcolor.Attribute;
 import org.uts.controller.DatabaseController;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -100,7 +99,7 @@ public class Student extends User implements Serializable {
         }
     }
 
-    public void changePassword(String newPassword){
+    public void changePassword(String newPassword) {
         setPassword(newPassword);
         DatabaseController.updateStudentToDatabase(this);
     }
