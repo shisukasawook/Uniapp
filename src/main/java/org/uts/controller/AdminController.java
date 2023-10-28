@@ -47,7 +47,7 @@ public class AdminController {
         gradeStudentMap.forEach((grade, students) -> {
             System.out.print("\t\t" + grade + " --> ");
             List<String> gradeString = students.stream()
-                    .map(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %s", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getAverageGrade(), student.getAverageMark()))
+                    .map(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %.2f", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getAverageGrade(), student.getAverageMark()))
                     .collect(Collectors.toList());
             System.out.println(gradeString);
         });

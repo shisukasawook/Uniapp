@@ -1,7 +1,6 @@
 package org.uts.model;
 
 import com.diogonunes.jcolor.Attribute;
-
 import org.uts.controller.DatabaseController;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class Student extends User implements Serializable {
         this.enrolledSubjects = enrolledSubjects;
     }
 
-    public void enrolRandomSubject() throws IOException {
+    public void enrolRandomSubject() {
         final List<Subject> subjectList = getEnrolledSubjects();
         if (subjectList.size() == 4) {
             System.out.println(colorize("\t\tStudents are allowed to enrol in 4 subjects only", Attribute.RED_TEXT()));
@@ -49,7 +48,7 @@ public class Student extends User implements Serializable {
         System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
     }
 
-    public void removeSubjectByID(String id) throws IOException {
+    public void removeSubjectByID(String id) {
         final List<Subject> subjectList = getEnrolledSubjects();
         Subject subjectToRemove = null;
         for (Subject subject : subjectList) {
@@ -68,21 +67,21 @@ public class Student extends User implements Serializable {
 
     }
 
-        public double getAverageMark( ) {
-            if (enrolledSubjects.isEmpty()) {
-                return 0.0; // You can choose to return 0 or handle this case differently.
-            }
-
-            int sum = 0;
-            for (Subject subject : enrolledSubjects) {
-                sum += subject.getSubjectMark();
-            }
-
-            return (double) sum / enrolledSubjects.size();
+    public double getAverageMark() {
+        if (enrolledSubjects.isEmpty()) {
+            return 0.0; // You can choose to return 0 or handle this case differently.
         }
 
-    public String getAverageGrade( ) {
-        return convertAverageMarkToGrade (getAverageMark()) ;
+        int sum = 0;
+        for (Subject subject : enrolledSubjects) {
+            sum += subject.getSubjectMark();
+        }
+
+        return (double) sum / enrolledSubjects.size();
+    }
+
+    public String getAverageGrade() {
+        return convertAverageMarkToGrade(getAverageMark());
     }
 
     public String convertAverageMarkToGrade(double getAverageMark) {
@@ -99,6 +98,10 @@ public class Student extends User implements Serializable {
         } else {
             return "HD";
         }
+    }
 
-
-}}
+    public void changePassword(String newPassword){
+        setPassword(newPassword);
+        DatabaseController.updateStudentToDatabase(this);
+    }
+}
