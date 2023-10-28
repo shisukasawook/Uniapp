@@ -7,8 +7,9 @@ import org.uts.model.Subject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 
@@ -27,8 +28,6 @@ public class CLIUniApp {
             String input = bufferedReader.readLine();
             if (input.equals("A")) {
                 displayAdminSystem();
-
-
             } else if (input.equals("S")) {
                 while (true) {
                     System.out.print(colorize("\tStudent System (l/r/x) : ", Attribute.BLUE_TEXT()));
@@ -104,94 +103,7 @@ public class CLIUniApp {
     }
 
     private void displayAdminSystem() {
-        while (true) {
-            System.out.print(colorize("\t\tAdmin System (c/g/p/r/s/x) : ", Attribute.BLUE_TEXT()));
-            String input = in.nextLine();
-            if (input.equals("x")) {
-                break;
-            } else if (input.equals("s")) {
-                final List<Student> registeredStudents = DatabaseController.readStudentsFromDatabase();
-                System.out.println(colorize("\t\tStudent List", Attribute.YELLOW_TEXT()));
-                if (registeredStudents.isEmpty())
-                    System.out.println("\t\t<Nothing to display>");
-
-                for (Student student : registeredStudents) {
-                    System.out.printf("\t\t%s %s :: %s --> Email: %s %n", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getEmail());
-                }
-            } else if (input.equals("g")) {
-                final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
-                System.out.println(colorize("\t\tGrade Grouping", Attribute.YELLOW_TEXT()));
-                HashMap<String, List<Student>> gradeStudentMap = new HashMap<>();
-
-                if (groupStudent.isEmpty())
-                    System.out.println("\t\t<Nothing to display>");
-
-                for (Student student : groupStudent) {
-                    List<Student> studentList = gradeStudentMap.get(student.getAverageGrade());
-                    if (null == studentList) {
-                        studentList = new ArrayList<>();
-                    }
-                    studentList.add(student);
-                    gradeStudentMap.put(student.getAverageGrade(), studentList);
-                }
-
-                gradeStudentMap.forEach((grade, students) -> {
-                    System.out.print("\t\t" + grade + " --> ");
-                    //students.forEach(student-> System.out.print(String.format("[%s %s :: %s --> GRADE: %s - MARK: %s]",student.getFirstName(),student.getLastName(),student.getStudentID(),student.getAverageGrade(),student.getAverageMark())));
-
-
-                    List<String> gradeString = students.stream()
-                            .map(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %s", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getAverageGrade(), student.getAverageMark()))
-                            .collect(Collectors.toList());
-
-
-                    System.out.println(gradeString);
-
-                });
-
-            } else if (input.equals("p")) {
-                final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
-                System.out.println(colorize("\t\tPASS/FAIL Partition", Attribute.YELLOW_TEXT()));
-
-                Map<Boolean, List<String>> partitionedStudents = groupStudent.stream()
-                        .collect(Collectors.partitioningBy(student -> student.getAverageMark() < 50,
-                                Collectors.mapping(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %.2f",
-                                        student.getFirstName(), student.getLastName(), student.getStudentID(),
-                                        student.getAverageGrade(), student.getAverageMark()), Collectors.toList())));
-
-                System.out.print("\t\tFAIL --> ");
-                System.out.println(partitionedStudents.get(true));
-
-                System.out.print("\t\tPASS --> ");
-                System.out.println(partitionedStudents.get(false));
-
-            } else if (input.equals("r")) {
-                System.out.print("\t\tRemove by ID: ");
-                final String studentID = in.nextLine();
-                final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
-                List<Student> removeStudent = groupStudent.stream()
-                        .filter(student -> !student.getStudentID().equals(studentID))
-                        .collect(Collectors.toList());
-                if (groupStudent.size() == removeStudent.size()) {
-                    System.out.println(colorize("\t\tStudent " + studentID + " does not exist", Attribute.RED_TEXT()));
-                } else {
-                    System.out.println(colorize("\t\tRemoving Student " + studentID + " Account", Attribute.YELLOW_TEXT()));
-                    DatabaseController.writeStudentsToDatabase(removeStudent);
-                }
-
-            } else if (input.equals("c")) {
-                System.out.println(colorize("\t\tClearing student database", Attribute.YELLOW_TEXT()));
-                System.out.print(colorize("\t\tAre you sure you want to clear database? Y(es) / N(o): ", Attribute.RED_TEXT()));
-                final String confirmClear = in.nextLine();
-
-                if (Objects.equals(confirmClear, "Y")) {
-                    System.out.println(colorize("\t\tStudents data cleared", Attribute.YELLOW_TEXT()));
-                    DatabaseController.writeStudentsToDatabase(new ArrayList<>());
-                }
-
-            }
-
-        }
-
+        AdminController adminController = new AdminController();
+        adminController.startMenu();
     }
 }
