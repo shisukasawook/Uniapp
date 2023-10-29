@@ -33,7 +33,7 @@ public class CLIUniApp {
             } else if (input.equals("S")) {
                 displayStudentSystem();
             } else if (input.equals("X")) {
-                System.out.println(colorize("Thank You", Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("Thank You", Attribute.BRIGHT_YELLOW_TEXT()));
                 break;
             } else {
                 System.out.println("Menu options");
