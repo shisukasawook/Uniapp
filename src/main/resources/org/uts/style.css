@@ -1,0 +1,42 @@
+/* Set the background color and text color for the login page */
+.login-page {
+    -fx-background-color: #99CCFF;
+    -fx-padding: 50px;
+}
+
+.emailField, passwordField{
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;
+    -fx-font-size: 16px;
+}
+
+.heading {
+  -fx-font-size: 30px;
+  -fx-font-family: "Tahoma";
+  -fx-font-weight: bold;
+  -fx-fill: #66CCFF;
+  -fx-stroke: #3333CC;
+}
+
+.label {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+/* Style the "Student Login" text */
+.login-title {
+    -fx-fill: pink;
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+/* Style the buttons */
+.login-button {
+    -fx-background-color: #0066FF;
+    -fx-text-fill: white; /* White text color */
+}
+
+.login-button:hover {
+    -fx-background-color: #0000FF;
+}

@@ -113,19 +113,19 @@ public class StudentController {
         return studentID.toString();
     }
 
-    private boolean validatePasswordPolicy(String password) {
+    public static boolean validatePasswordPolicy(String password) {
         Pattern pattern = Pattern.compile("^[A-Z][A-Za-z]{5,}[0-9]{3,}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.find();
     }
 
-    private boolean validateEmail(String email) {
+    public static boolean validateEmail(String email) {
         Pattern pattern = Pattern.compile("^.*\\..*@university.com$");
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
 
-    private Student findStudentByEmail(String email, List<Student> studentList) {
+    public static Student findStudentByEmail(String email, List<Student> studentList) {
         for (Student student : studentList) {
             if (student.getEmail().equalsIgnoreCase(email)) {
                 return student;
@@ -134,7 +134,7 @@ public class StudentController {
         return null; // Return null if the student is not found
     }
 
-    private boolean doPasswordsMatch(String password1, String password2) {
+    public static boolean doPasswordsMatch(String password1, String password2) {
         return password1.equals(password2);
     }
 
