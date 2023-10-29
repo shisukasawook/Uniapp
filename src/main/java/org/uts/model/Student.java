@@ -34,7 +34,7 @@ public class Student extends User implements Serializable {
     public void enrolSubject() {
         final List<Subject> subjectList = getEnrolledSubjects();
         if (subjectList.size() == 4) {
-            System.out.println(colorize("\t\tStudents are allowed to enrol in 4 subjects only", Attribute.RED_TEXT()));
+            System.out.println(colorize("\t\t\t\tStudents are allowed to enrol in 4 subjects only", Attribute.BRIGHT_RED_TEXT()));
             return;
         }
         enrolRandomSubject(subjectList);
@@ -48,7 +48,8 @@ public class Student extends User implements Serializable {
         subjectList.add(subject);
         setEnrolledSubjects(subjectList);
         DatabaseController.updateStudentToDatabase(this);
-        System.out.println(colorize(String.format("\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.YELLOW_TEXT()));
+        System.out.println(colorize(String.format("\t\t\t\tEnrolling in Subject-%s", subject.getSubjectID()), Attribute.BRIGHT_YELLOW_TEXT()));
+        System.out.println(colorize(String.format("\t\t\t\tYou are now enrolled in %s out of 4 subjects", subjectList.size()), Attribute.BRIGHT_YELLOW_TEXT()));
     }
 
     public void removeSubjectByID(String id) {
@@ -61,12 +62,15 @@ public class Student extends User implements Serializable {
             }
         }
         if (subjectToRemove != null) {
-            System.out.println(colorize(String.format("\t\tDropping Subject-%s", subjectToRemove.getSubjectID()), Attribute.YELLOW_TEXT()));
+            System.out.println(colorize(String.format("\t\t\t\tDropping Subject-%s", subjectToRemove.getSubjectID()), Attribute.BRIGHT_YELLOW_TEXT()));
             subjectList.remove(subjectToRemove);
             this.setEnrolledSubjects(subjectList);
             DatabaseController.updateStudentToDatabase(this);
+            System.out.println(colorize(String.format("\t\t\t\tYou are now enrolled in %s out of 4 subjects", subjectList.size()), Attribute.BRIGHT_YELLOW_TEXT()));
+
+        } else{
+            System.out.println(colorize("\t\t\t\tCannot find SubjectID", Attribute.BRIGHT_RED_TEXT()));
         }
-        System.out.println(colorize(String.format("\t\tYou are now enrolled in %s out of 4 subjects", subjectList.size()), Attribute.YELLOW_TEXT()));
 
     }
 

@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller="org.uts.SubjectListController" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" styleClass="login-page" stylesheets="@style.css">
-    <children>
+<AnchorPane fx:controller="org.uts.SubjectListController" xmlns:fx="http://javafx.com/fxml/1" styleClass="login-page" stylesheets="@style.css">
+    <VBox alignment="center">
         <Label layoutX="30.0" layoutY="10.0" text="Current Enrolment" />
-        <ListView fx:id="subjectListView" layoutX="30.0" layoutY="40.0" prefHeight="340.0" prefWidth="540.0"/>
-    </children>
+        <ListView fx:id="subjectListView" />
     <HBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="3">
         <Button styleClass="login-button" text="Enrol in subjects" onAction="#enrollButtonAction" />
         <Button styleClass="login-button" text="Logout" onAction="#logout" />
     </HBox>
+    </VBox>
 </AnchorPane>
-
-
 

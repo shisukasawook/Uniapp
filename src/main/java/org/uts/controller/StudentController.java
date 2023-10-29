@@ -22,24 +22,24 @@ public class StudentController {
     }
 
     private void loginStudent() {
-        System.out.println(colorize("\t\tStudent Sign In", Attribute.GREEN_TEXT()));
+        System.out.println(colorize("\t\tStudent Sign In", Attribute.BRIGHT_GREEN_TEXT()));
         while (true) {
             System.out.print(colorize("\t\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String email = in.nextLine();
-            System.out.print("\t\tPassword: ");
+            System.out.print(colorize("\t\tPassword: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String password = in.nextLine();
             if (validatePasswordPolicy(password) && validateEmail(email)) {
-                System.out.println(colorize("\t\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("\t\temail and password formats acceptable", Attribute.BRIGHT_YELLOW_TEXT()));
                 final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
                 final Student foundStudent = findStudentByEmail(email, studentList);
                 if (foundStudent == null || !doPasswordsMatch(password, foundStudent.getPassword())) {
-                    System.out.println(colorize("\t\tStudent does not exist ", Attribute.RED_TEXT()));
+                    System.out.println(colorize("\t\tStudent does not exist ", Attribute.BRIGHT_RED_TEXT()));
                     break;
                 }
                 startCourseMenu(foundStudent);
                 break;
             } else {
-                System.out.println(colorize("\t\tIncorrect email or password format", Attribute.RED_TEXT()));
+                System.out.println(colorize("\t\tIncorrect email or password format", Attribute.BRIGHT_RED_TEXT()));
             }
         }
 
@@ -48,9 +48,9 @@ public class StudentController {
     private void registerStudent() {
         System.out.println(colorize("\t\tStudent Sign Up", Attribute.BRIGHT_GREEN_TEXT()));
         while (true) {
-            System.out.print("\t\tEmail: ");
+            System.out.print(colorize("\t\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String email = in.nextLine();
-            System.out.print("\t\tPassword: ");
+            System.out.print(colorize("\t\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String password = in.nextLine();
             if (validatePasswordPolicy(password) && validateEmail(email)) {
                 System.out.println(colorize("\t\temail and password formats acceptable", Attribute.BRIGHT_YELLOW_TEXT()));
@@ -60,7 +60,7 @@ public class StudentController {
                     System.out.println(colorize(String.format("\t\tStudent %s %s already exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.BRIGHT_RED_TEXT()));
                     break;
                 }
-                System.out.print("\t\tName: ");
+                System.out.print(colorize("\t\tName: ", Attribute.BRIGHT_WHITE_TEXT()));
                 final String name = in.nextLine();
                 final Student student = new Student();
                 student.setStudentID(randomStudentID());
@@ -68,14 +68,14 @@ public class StudentController {
                 student.setPassword(password);
                 final String[] splitName = name.trim().split("\\s+");
                 if (splitName.length != 2) {
-                    System.out.println(colorize("\t\tIncorrect format Name", Attribute.RED_TEXT()));
+                    System.out.println(colorize("\t\tIncorrect format Name", Attribute.BRIGHT_RED_TEXT()));
                     break;
                 }
                 student.setFirstName(splitName[0]);
                 student.setLastName(splitName[1]);
                 student.setEnrolledSubjects(new ArrayList<Subject>());
                 DatabaseController.updateStudentToDatabase(student);
-                System.out.println(colorize("\t\tEnrolling Student " + student.getFirstName() + " " + student.getLastName(), Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("\t\tEnrolling Student " + student.getFirstName() + " " + student.getLastName(), Attribute.BRIGHT_YELLOW_TEXT()));
                 break;
             } else {
                 System.out.println(colorize("\t\tIncorrect email or password format", Attribute.BRIGHT_RED_TEXT()));
@@ -139,18 +139,24 @@ public class StudentController {
     }
 
     private void changePassword(Student student) {
-        System.out.println(colorize("\t\tUpdating Password", Attribute.YELLOW_TEXT()));
+        System.out.println(colorize("\t\t\t\tUpdating Password", Attribute.BRIGHT_YELLOW_TEXT()));
+        String newPassword;
+        while (true){
+            System.out.print(colorize("\t\t\t\tNew Password: ", Attribute.BRIGHT_WHITE_TEXT()));
+            newPassword = in.nextLine();
+            if(!validatePasswordPolicy(newPassword)){
+                System.out.println(colorize("\t\t\t\tIncorrect password format", Attribute.BRIGHT_RED_TEXT()));
+            } else {
+                break;
+            }
+        }
         while (true) {
-            System.out.print("\t\tNew Password: ");
-            final String newPassword = in.nextLine();
-            System.out.print("\t\tConfirm Password: ");
+            System.out.print(colorize("\t\t\t\tConfirm Password: ",Attribute.BRIGHT_WHITE_TEXT()));
             final String confirmPassword = in.nextLine();
             if (!newPassword.equals(confirmPassword)) {
-                System.out.println(colorize("\t\tPassword does not match - try again", Attribute.RED_TEXT()));
-            } else if (!validatePasswordPolicy(newPassword)) {
-                System.out.println(colorize("\t\tIncorrect password format", Attribute.RED_TEXT()));
+                System.out.println(colorize("\t\t\t\tPassword does not match - try again", Attribute.BRIGHT_RED_TEXT()));
             } else {
-                student.changePassword(newPassword);
+                student.changePassword(confirmPassword);
                 break;
             }
         }
@@ -161,22 +167,22 @@ public class StudentController {
     }
 
     private void removeSubject(Student student) {
-        System.out.print("\t\tRemove Subject by ID: ");
+        System.out.print(colorize("\t\t\t\tRemove Subject by ID: ",Attribute.BRIGHT_WHITE_TEXT()));
         final String subjectID = in.nextLine();
         student.removeSubjectByID(subjectID);
     }
 
     private void viewEnrolmentList(Student student) {
         final List<Subject> enrolledSubjects = student.getEnrolledSubjects();
-        System.out.println(colorize(String.format("\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.YELLOW_TEXT()));
+        System.out.println(colorize(String.format("\t\t\t\tShowing %s subjects", enrolledSubjects.size()), Attribute.BRIGHT_YELLOW_TEXT()));
         for (Subject subject : enrolledSubjects) {
-            System.out.printf("\t\t[ Subject::%s -- mark = %s -- grade = %s ]%n", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade());
+            System.out.printf("\t\t\t\t[ Subject::%s -- mark = %s -- grade =  %2s ]%n", subject.getSubjectID(), subject.getSubjectMark(), subject.getSubjectGrade());
         }
     }
 
     private void startCourseMenu(Student loginStudent) {
         while (true) {
-            System.out.print(colorize("\t\tStudent Course Menu (c/e/r/s/x) : ", Attribute.BLUE_TEXT()));
+            System.out.print(colorize("\t\t\t\tStudent Course Menu (c/e/r/s/x): ", Attribute.BRIGHT_CYAN_TEXT()));
             final String input = in.nextLine();
             if (input.equals("c")) {
                 changePassword(loginStudent);
@@ -189,12 +195,12 @@ public class StudentController {
             } else if (input.equals("x")) {
                 break;
             } else {
-                System.out.println("\t\tMenu options");
-                System.out.println("\t\tc = change password");
-                System.out.println("\t\te = enrolment subject");
-                System.out.println("\t\tr = remove subject");
-                System.out.println("\t\ts = show enrolment subject");
-                System.out.println("\t\tx = exit");
+                System.out.println("\t\t\t\tMenu options");
+                System.out.println("\t\t\t\tc = change password");
+                System.out.println("\t\t\t\te = enrolment subject");
+                System.out.println("\t\t\t\tr = remove subject");
+                System.out.println("\t\t\t\ts = show enrolment subject");
+                System.out.println("\t\t\t\tx = exit");
             }
         }
     }

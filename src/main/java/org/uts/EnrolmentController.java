@@ -47,16 +47,17 @@ public class EnrolmentController {
     private void enrolButtonAction(ActionEvent event) {
         final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
         if (subjectList.size() == 4) {
-            displayErrorPopup("xxxxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxxxxx");
+            displayErrorPopup("Enrolment Status", "Students are allowed to enrol in 4 subjects only");
         } else {
             try {
                 loginStudent.enrolRandomSubject(subjectList);
                 subjectListController.setLoginStudent(loginStudent);
-                displayErrorPopup("SUccesss", "SUccesss");
+                displaySuccessPopup("Enrolment Status", "Subject enrolment successful");
             } catch (Exception e) {
             }
         }
     }
+
     @FXML
     private void backButtonAction(ActionEvent event) {
         goBack();
@@ -69,6 +70,14 @@ public class EnrolmentController {
 
     private void displayErrorPopup(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+    private void displaySuccessPopup(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

@@ -61,18 +61,14 @@ public class LoginController {
         String enteredPassword = passwordField.getText();
 
         if (enteredEmail.isEmpty() || enteredPassword.isEmpty()) {
-            // Empty field(s), display an error popup
             displayErrorPopup("Empty Fields", "Please fill in both email and password fields.");
         }
         else if (!StudentController.validateEmail(enteredEmail)) {
-            // Invalid email format, display an error popup
             displayErrorPopup("Invalid Email Format", "Please enter a valid email address.");
             return; // Exit the login method
         }
         else if (!StudentController.validatePasswordPolicy(enteredPassword)) {
-                // Invalid email format, display an error popup
                 displayErrorPopup("Invalid Password Format", "Please enter a valid password.");
-                return; // Exit the login method
         }
         else{
             List<Student> students = DatabaseController.readStudentsFromDatabase();
