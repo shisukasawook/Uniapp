@@ -99,7 +99,7 @@ public class AdminController {
 
     public void startMenu() {
         while (true) {
-            System.out.print(colorize("\t\tAdmin System (c/g/p/r/s/x) : ", Attribute.BLUE_TEXT()));
+            System.out.print(colorize("\t\tAdmin System (c/g/p/r/s/x): ", Attribute.BRIGHT_CYAN_TEXT()));
             String input = in.nextLine();
             if (input.equals("c")) {
                 clearData();

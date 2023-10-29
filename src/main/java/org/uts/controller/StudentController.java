@@ -22,45 +22,45 @@ public class StudentController {
     }
 
     private void loginStudent() {
-        System.out.println(colorize("\tStudent Sign In", Attribute.GREEN_TEXT()));
+        System.out.println(colorize("\t\tStudent Sign In", Attribute.GREEN_TEXT()));
         while (true) {
-            System.out.print(colorize("\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
+            System.out.print(colorize("\t\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String email = in.nextLine();
-            System.out.print("\tPassword: ");
+            System.out.print("\t\tPassword: ");
             final String password = in.nextLine();
             if (validatePasswordPolicy(password) && validateEmail(email)) {
-                System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("\t\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
                 final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
                 final Student foundStudent = findStudentByEmail(email, studentList);
                 if (foundStudent == null || !doPasswordsMatch(password, foundStudent.getPassword())) {
-                    System.out.println(colorize("\tStudent does not exist ", Attribute.RED_TEXT()));
+                    System.out.println(colorize("\t\tStudent does not exist ", Attribute.RED_TEXT()));
                     break;
                 }
                 startCourseMenu(foundStudent);
                 break;
             } else {
-                System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
+                System.out.println(colorize("\t\tIncorrect email or password format", Attribute.RED_TEXT()));
             }
         }
 
     }
 
     private void registerStudent() {
-        System.out.println(colorize("\tStudent Sign Up", Attribute.GREEN_TEXT()));
+        System.out.println(colorize("\t\tStudent Sign Up", Attribute.BRIGHT_GREEN_TEXT()));
         while (true) {
-            System.out.print("\tEmail: ");
+            System.out.print("\t\tEmail: ");
             final String email = in.nextLine();
-            System.out.print("\tPassword: ");
+            System.out.print("\t\tPassword: ");
             final String password = in.nextLine();
             if (validatePasswordPolicy(password) && validateEmail(email)) {
-                System.out.println(colorize("\temail and password formats acceptable", Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("\t\temail and password formats acceptable", Attribute.BRIGHT_YELLOW_TEXT()));
                 final List<Student> studentList = DatabaseController.readStudentsFromDatabase();
                 final Student foundStudent = findStudentByEmail(email, studentList);
                 if (foundStudent != null) {
-                    System.out.println(colorize(String.format("\tStudent %s %s already Exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.RED_TEXT()));
+                    System.out.println(colorize(String.format("\t\tStudent %s %s already exists ", foundStudent.getFirstName(), foundStudent.getLastName()), Attribute.BRIGHT_RED_TEXT()));
                     break;
                 }
-                System.out.print("\tName: ");
+                System.out.print("\t\tName: ");
                 final String name = in.nextLine();
                 final Student student = new Student();
                 student.setStudentID(randomStudentID());
@@ -68,17 +68,17 @@ public class StudentController {
                 student.setPassword(password);
                 final String[] splitName = name.trim().split("\\s+");
                 if (splitName.length != 2) {
-                    System.out.println(colorize("\tIncorrect format Name", Attribute.RED_TEXT()));
+                    System.out.println(colorize("\t\tIncorrect format Name", Attribute.RED_TEXT()));
                     break;
                 }
                 student.setFirstName(splitName[0]);
                 student.setLastName(splitName[1]);
                 student.setEnrolledSubjects(new ArrayList<Subject>());
                 DatabaseController.updateStudentToDatabase(student);
-                System.out.println(colorize("\tEnrolling Student " + student.getFirstName() + " " + student.getLastName(), Attribute.YELLOW_TEXT()));
+                System.out.println(colorize("\t\tEnrolling Student " + student.getFirstName() + " " + student.getLastName(), Attribute.YELLOW_TEXT()));
                 break;
             } else {
-                System.out.println(colorize("\tIncorrect email or password format", Attribute.RED_TEXT()));
+                System.out.println(colorize("\t\tIncorrect email or password format", Attribute.BRIGHT_RED_TEXT()));
             }
         }
 
@@ -86,7 +86,7 @@ public class StudentController {
 
     public void startMenu() {
         while (true) {
-            System.out.print(colorize("\tStudent System (l/r/x) : ", Attribute.BLUE_TEXT()));
+            System.out.print(colorize("\t\tStudent System (l/r/x): ", Attribute.BRIGHT_CYAN_TEXT()));
             String input = in.nextLine();
             if (input.equals("l")) {
                 loginStudent();
@@ -95,10 +95,10 @@ public class StudentController {
             } else if (input.equals("x")) {
                 break;
             } else {
-                System.out.println("\tMenu options");
-                System.out.println("\tl = login");
-                System.out.println("\tr = register");
-                System.out.println("\tx = exit");
+                System.out.println("\t\tMenu options");
+                System.out.println("\t\tl = login");
+                System.out.println("\t\tr = register");
+                System.out.println("\t\tx = exit");
             }
         }
     }
