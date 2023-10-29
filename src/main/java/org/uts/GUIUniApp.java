@@ -4,14 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.uts.controller.DatabaseController;
 
 import java.io.IOException;
 
-public class Login extends Application {
+public class GUIUniApp extends Application {
 
     public static void main(String[] args) {
         DatabaseController.initialize();
@@ -24,7 +22,7 @@ public class Login extends Application {
         Parent root = loader.load();
         LoginController loginController = loader.getController();
         loginController.setStage(primaryStage);
-        Scene loginScene = new Scene(root, 300, 200);
+        Scene loginScene = new Scene(root, 350, 400);
         loginController.setScene(loginScene);
         primaryStage.setTitle("GUIUniApp");
         primaryStage.setScene(loginScene);

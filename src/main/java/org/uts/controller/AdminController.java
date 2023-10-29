@@ -17,23 +17,23 @@ public class AdminController {
     }
 
     private void clearData() {
-        System.out.println(colorize("\t\tClearing student database", Attribute.YELLOW_TEXT()));
-        System.out.print(colorize("\t\tAre you sure you want to clear database? Y(es) / N(o): ", Attribute.RED_TEXT()));
+        System.out.println(colorize("\t\tClearing student database", Attribute.BRIGHT_YELLOW_TEXT()));
+        System.out.print(colorize("\t\tAre you sure you want to clear database? Y(es) / N(o): ", Attribute.BRIGHT_RED_TEXT()));
         final String confirmClear = in.nextLine();
 
         if (Objects.equals(confirmClear, "Y")) {
-            System.out.println(colorize("\t\tStudents data cleared", Attribute.YELLOW_TEXT()));
+            System.out.println(colorize("\t\tStudents data cleared", Attribute.BRIGHT_YELLOW_TEXT()));
             DatabaseController.writeStudentsToDatabase(new ArrayList<>());
         }
     }
 
     private void viewStudentsByGrade() {
         final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
-        System.out.println(colorize("\t\tGrade Grouping", Attribute.YELLOW_TEXT()));
+        System.out.println(colorize("\t\tGrade Grouping", Attribute.BRIGHT_YELLOW_TEXT()));
         HashMap<String, List<Student>> gradeStudentMap = new HashMap<>();
 
         if (groupStudent.isEmpty())
-            System.out.println("\t\t<Nothing to display>");
+            System.out.println("\t\t\t\t<Nothing to display>");
 
         for (Student student : groupStudent) {
             List<Student> studentList = gradeStudentMap.get(student.getAverageGrade());
@@ -47,7 +47,7 @@ public class AdminController {
         gradeStudentMap.forEach((grade, students) -> {
             System.out.print("\t\t" + grade + " --> ");
             List<String> gradeString = students.stream()
-                    .map(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %.2f", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getAverageGrade(), student.getAverageMark()))
+                    .map(student -> String.format("%s %s :: %s --> GRADE:  %s - MARK: %.2f", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getAverageGrade(), student.getAverageMark()))
                     .collect(Collectors.toList());
             System.out.println(gradeString);
         });
@@ -55,11 +55,11 @@ public class AdminController {
 
     private void viewPassFailStudents() {
         final List<Student> groupStudent = DatabaseController.readStudentsFromDatabase();
-        System.out.println(colorize("\t\tPASS/FAIL Partition", Attribute.YELLOW_TEXT()));
+        System.out.println(colorize("\t\tPASS/FAIL Partition", Attribute.BRIGHT_YELLOW_TEXT()));
 
         Map<Boolean, List<String>> partitionedStudents = groupStudent.stream()
                 .collect(Collectors.partitioningBy(student -> student.getAverageMark() < 50,
-                        Collectors.mapping(student -> String.format("%s %s :: %s --> GRADE: %s - MARK: %.2f",
+                        Collectors.mapping(student -> String.format("%s %s :: %s --> GRADE:  %s - MARK: %.2f",
                                 student.getFirstName(), student.getLastName(), student.getStudentID(),
                                 student.getAverageGrade(), student.getAverageMark()), Collectors.toList())));
 
@@ -78,18 +78,18 @@ public class AdminController {
                 .filter(student -> !student.getStudentID().equals(studentID))
                 .collect(Collectors.toList());
         if (groupStudent.size() == removeStudent.size()) {
-            System.out.println(colorize("\t\tStudent " + studentID + " does not exist", Attribute.RED_TEXT()));
+            System.out.println(colorize("\t\tStudent " + studentID + " does not exist", Attribute.BRIGHT_RED_TEXT()));
         } else {
-            System.out.println(colorize("\t\tRemoving Student " + studentID + " Account", Attribute.YELLOW_TEXT()));
+            System.out.println(colorize("\t\tRemoving Student " + studentID + " Account", Attribute.BRIGHT_YELLOW_TEXT()));
             DatabaseController.writeStudentsToDatabase(removeStudent);
         }
     }
 
     private void viewStudents() {
         final List<Student> registeredStudents = DatabaseController.readStudentsFromDatabase();
-        System.out.println(colorize("\t\tStudent List", Attribute.YELLOW_TEXT()));
+        System.out.println(colorize("\t\tStudent List", Attribute.BRIGHT_YELLOW_TEXT()));
         if (registeredStudents.isEmpty()) {
-            System.out.println("\t\t<Nothing to display>");
+            System.out.println("\t\t\t\t<Nothing to display>");
         }
         for (Student student : registeredStudents) {
             System.out.printf("\t\t%s %s :: %s --> Email: %s %n", student.getFirstName(), student.getLastName(), student.getStudentID(), student.getEmail());

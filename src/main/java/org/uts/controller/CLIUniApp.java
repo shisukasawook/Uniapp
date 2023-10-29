@@ -36,10 +36,10 @@ public class CLIUniApp {
                 System.out.println(colorize("Thank You", Attribute.BRIGHT_YELLOW_TEXT()));
                 break;
             } else {
-                System.out.println("Menu options");
-                System.out.println("A = Admin System");
-                System.out.println("S = Student System");
-                System.out.println("X = Exit");
+                System.out.println("\t\tMenu options");
+                System.out.println("\t\tA = Admin System");
+                System.out.println("\t\tS = Student System");
+                System.out.println("\t\tX = Exit");
             }
         }
     }

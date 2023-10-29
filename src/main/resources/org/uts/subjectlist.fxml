@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.GridPane?>
-<GridPane fx:controller="org.uts.SubjectListController" xmlns:fx="http://javafx.com/fxml/1" styleClass="login-page" stylesheets="@style.css">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uts.SubjectListController" styleClass="background"
+          stylesheets="@style.css">
     <VBox alignment="center" spacing="8">
-        <Label text="Current Enrolment"/>
-        <ListView fx:id="subjectListView"  />
+        <Label text="Current enrolment subjects"/>
+        <Label fx:id="studentFirstNameLabel"/>
+        <ListView fx:id="subjectListView"/>
         <HBox alignment="center" spacing="16">
-            <Button styleClass="login-button" text="Enrol in subjects" onAction="#enrollButtonAction" />
-            <Button styleClass="login-button" text="Logout" onAction="#logout" />
+            <Button styleClass="button" text="Enrols subject" onAction="#enrollButtonAction"/>
+            <Button styleClass="button" text="Logout" onAction="#logout"/>
         </HBox>
     </VBox>
 </GridPane>

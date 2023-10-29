@@ -1,9 +1,7 @@
 package org.uts;
 
-import org.uts.controller.DatabaseController;
 import org.uts.controller.CLIUniApp;
-
-import java.io.IOException;
+import org.uts.controller.DatabaseController;
 
 public class Main {
     public static void main(String[] args) {

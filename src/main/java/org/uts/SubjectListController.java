@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.uts.model.Student;
@@ -18,9 +19,14 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class SubjectListController implements Initializable {
+
     private Student loginStudent;
     @FXML
     private ListView<String> subjectListView;
+
+    @FXML
+    private Label studentFirstNameLabel;
+
     private Stage stage;
     private Scene previousScene;
     private Scene scene;
@@ -38,7 +44,7 @@ public class SubjectListController implements Initializable {
             enrolmentController.setLoginStudent(loginStudent);
             enrolmentController.setStage(stage);
             enrolmentController.setSubjectListController(this);
-            Scene enrolmentScene = new Scene(root);
+            Scene enrolmentScene = new Scene(root, 350, 400);
             enrolmentController.setScene(enrolmentScene);
             enrolmentController.setPreviousScene(scene);
             stage.setScene(enrolmentScene);
@@ -71,15 +77,15 @@ public class SubjectListController implements Initializable {
         }
     }
 
-
-    public void setLoginStudent(Student student){
+    public void setLoginStudent(Student student) {
         loginStudent = student;
         final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
         List<String> subjectIDList = subjectList.stream()
-                .map(subject -> String.format("%s", subject.getSubjectID()))
+                .map(subject -> String.format("Subject ID-%s", subject.getSubjectID()))
                 .collect(Collectors.toList());
         subjectListView.setItems(FXCollections.observableArrayList(subjectIDList));
-
+        String fullName = student.getFirstName() + " " + student.getLastName();
+        studentFirstNameLabel.setText(fullName);
     }
 
     public void enrollButtonAction(ActionEvent event) {

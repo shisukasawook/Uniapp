@@ -2,20 +2,19 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uts.LoginController" alignment="center" hgap="2" vgap="2"
+          styleClass="background" stylesheets="@style.css">
 
-<GridPane fx:controller="org.uts.LoginController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="2" vgap="2" styleClass="login-page" stylesheets="@style.css">
-
-    <Text styleClass="heading" text="Student Login" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/>
-    <Label styleClass="label" text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <TextField fx:id="emailField" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-    <Label styleClass="label" text="Password:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <Text styleClass="heading" text="Student Login" textAlignment="center" lineSpacing="10" GridPane.columnIndex="0"
+          GridPane.rowIndex="0" GridPane.columnSpan="2"/>
+    <Label styleClass="label" text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <TextField fx:id="emailField" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <Label styleClass="label" text="Password:" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
     <HBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="3">
-        <Button styleClass="login-button" text="Login" onAction="#loginButtonAction" />
-        <Button styleClass="login-button" text="Cancel" onAction="#cancelButtonAction" />
+        <Button styleClass="button" text="Login" onAction="#loginButtonAction"/>
+        <Button styleClass="button" text="Cancel" onAction="#cancelButtonAction"/>
     </HBox>
 
 </GridPane>

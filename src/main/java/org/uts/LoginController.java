@@ -17,8 +17,6 @@ import org.uts.model.Student;
 import java.util.List;
 import java.util.Optional;
 
-import static com.diogonunes.jcolor.Ansi.colorize;
-
 public class LoginController {
 
     @FXML
@@ -38,7 +36,7 @@ public class LoginController {
             SubjectListController subjectListController = loader.getController();
             subjectListController.setLoginStudent(student);
             subjectListController.setStage(stage);
-            Scene subjectlistScene = new Scene(root);
+            Scene subjectlistScene = new Scene(root, 350, 400);
             subjectListController.setScene(subjectlistScene);
             subjectListController.setPreviousScene(scene);
             stage.setScene(subjectlistScene);
@@ -62,21 +60,17 @@ public class LoginController {
 
         if (enteredEmail.isEmpty() || enteredPassword.isEmpty()) {
             displayErrorPopup("Empty Fields", "Please fill in both email and password fields.");
-        }
-        else if (!StudentController.validateEmail(enteredEmail)) {
+        } else if (!StudentController.validateEmail(enteredEmail)) {
             displayErrorPopup("Invalid Email Format", "Please enter a valid email address.");
-            return; // Exit the login method
-        }
-        else if (!StudentController.validatePasswordPolicy(enteredPassword)) {
-                displayErrorPopup("Invalid Password Format", "Please enter a valid password.");
-        }
-        else{
+            // Exit the login method
+        } else if (!StudentController.validatePasswordPolicy(enteredPassword)) {
+            displayErrorPopup("Invalid Password Format", "Please enter a valid password.");
+        } else {
             List<Student> students = DatabaseController.readStudentsFromDatabase();
             final Student foundStudent = StudentController.findStudentByEmail(enteredEmail, students);
             if (foundStudent == null || !StudentController.doPasswordsMatch(enteredPassword, foundStudent.getPassword())) {
                 displayErrorPopup("Invalid Login Credentials", "The email or password you entered is incorrect.");
-            }
-            else {
+            } else {
                 passwordField.clear();
                 goToSubjectScene(foundStudent);
             }

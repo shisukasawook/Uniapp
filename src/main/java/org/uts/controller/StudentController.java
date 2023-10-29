@@ -50,7 +50,7 @@ public class StudentController {
         while (true) {
             System.out.print(colorize("\t\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String email = in.nextLine();
-            System.out.print(colorize("\t\tEmail: ", Attribute.BRIGHT_WHITE_TEXT()));
+            System.out.print(colorize("\t\tPassword: ", Attribute.BRIGHT_WHITE_TEXT()));
             final String password = in.nextLine();
             if (validatePasswordPolicy(password) && validateEmail(email)) {
                 System.out.println(colorize("\t\temail and password formats acceptable", Attribute.BRIGHT_YELLOW_TEXT()));
