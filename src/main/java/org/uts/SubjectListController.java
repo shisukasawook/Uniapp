@@ -9,11 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import org.uts.controller.StudentController;
 import org.uts.model.Student;
 import org.uts.model.Subject;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,14 +21,59 @@ public class SubjectListController implements Initializable {
     private Student loginStudent;
     @FXML
     private ListView<String> subjectListView;
+    private Stage stage;
+    private Scene previousScene;
+    private Scene scene;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
+
+    @FXML
+    private void goToEnrolScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("enrolmentlist.fxml"));
+            Parent root = loader.load();
+            EnrolmentController enrolmentController = loader.getController();
+//          enrolmentController.setDataFromLoginScene(student);
+            enrolmentController.setStage(stage);
+            Scene enrolmentScene = new Scene(root);
+            enrolmentController.setScene(enrolmentScene);
+            enrolmentController.setPreviousScene(scene);
+            stage.setScene(enrolmentScene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void logout() {
+        goBack();
+    }
+
+    public void setStage(Stage stage) {
+        stage.setTitle("Subject menu enrolment list");
+        this.stage = stage;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public void setPreviousScene(Scene scene) {
+        this.previousScene = scene;
+    }
+
+    private void goBack() {
+        if (previousScene != null) {
+            stage.setScene(previousScene);
+        }
+    }
+
+
     public void setDataFromLoginScene(Student student){
         loginStudent = student;
-
         final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
         List<String> subjectIDList = subjectList.stream()
                 .map(subject -> String.format("%s", subject.getSubjectID()))
@@ -40,28 +83,7 @@ public class SubjectListController implements Initializable {
     }
 
     public void enrollButtonAction(ActionEvent event) {
-        try {
-            // Load the FXML for the next page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("enrolmentlist.fxml"));
-            Parent root = loader.load();
-
-            // Get the controller for the next page (if needed)
-            EnrolmentController enrolmentController = loader.getController();
-//            enrolmentController.setDataFromLoginScene(student);
-
-            // Create a new stage for the next page
-            Stage stage = new Stage();
-            stage.setTitle("Enrol subjects");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        goToEnrolScene();
     }
 
-    public void backButtonAction(ActionEvent event) {
-//        Stage stage = (Stage) root.getScene().getWindow();
-//        stage.close();
-    }
 }

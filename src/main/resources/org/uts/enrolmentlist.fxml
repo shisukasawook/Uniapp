@@ -12,8 +12,8 @@
 <GridPane fx:controller="org.uts.EnrolmentController" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="2" vgap="2" styleClass="login-page" stylesheets="@style.css">
 
     <HBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="3">
-        <Button styleClass="login-button" text="Login" onAction="#loginButtonAction" />
-        <Button styleClass="login-button" text="Cancel" onAction="#cancelButtonAction" />
+        <Button styleClass="login-button" text="Enrol" onAction="#enrolButtonAction" />
+        <Button styleClass="login-button" text="Back" onAction="#backButtonAction" />
     </HBox>
 
 </GridPane>

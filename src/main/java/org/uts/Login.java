@@ -22,8 +22,9 @@ public class Login extends Application {
         Parent root = loader.load();
         LoginController loginController = loader.getController();
         loginController.setStage(primaryStage);
-        primaryStage.setTitle("GUIUniApp");
         Scene loginScene = new Scene(root, 300, 200);
+        loginController.setScene(loginScene);
+        primaryStage.setTitle("GUIUniApp");
         primaryStage.setScene(loginScene);
         primaryStage.show();
     }

@@ -2,32 +2,47 @@ package org.uts;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.uts.controller.DatabaseController;
-import org.uts.controller.StudentController;
 import org.uts.model.Student;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 public class EnrolmentController {
 
+    private Stage stage;
+
+    private Scene previousScene;
+    private Scene scene;
+
+    public void setStage(Stage stage) {
+        stage.setTitle("Enrol subjects");
+        this.stage = stage;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    private void goBack() {
+        if (previousScene != null) {
+            stage.setScene(previousScene);
+        }
+    }
+
+    public void setPreviousScene(Scene scene) {
+        this.previousScene = scene;
+    }
 
     @FXML
-    private void loginButtonAction(ActionEvent event) {
+    private void enrolButtonAction(ActionEvent event) {
 
     }
     @FXML
-    private void cancelButtonAction(ActionEvent event) {
-
+    private void backButtonAction(ActionEvent event) {
+        goBack();
     }
 
 
@@ -36,12 +51,7 @@ public class EnrolmentController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-
         Optional<ButtonType> result = alert.showAndWait();
-    }
-
-    private void navigateToNextPage(Student student) {
-
     }
 }
 

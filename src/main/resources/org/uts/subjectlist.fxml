@@ -14,7 +14,7 @@
     </children>
     <HBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="3">
         <Button styleClass="login-button" text="Enrol in subjects" onAction="#enrollButtonAction" />
-        <Button styleClass="login-button" text="Back" onAction="#backButtonAction" />
+        <Button styleClass="login-button" text="Logout" onAction="#logout" />
     </HBox>
 </AnchorPane>
 
