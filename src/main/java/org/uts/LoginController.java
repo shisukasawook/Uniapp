@@ -1,6 +1,5 @@
 package org.uts;
 
-import com.diogonunes.jcolor.Attribute;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +14,6 @@ import org.uts.controller.DatabaseController;
 import org.uts.controller.StudentController;
 import org.uts.model.Student;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +36,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("subjectlist.fxml"));
             Parent root = loader.load();
             SubjectListController subjectListController = loader.getController();
-            subjectListController.setDataFromLoginScene(student);
+            subjectListController.setLoginStudent(student);
             subjectListController.setStage(stage);
             Scene subjectlistScene = new Scene(root);
             subjectListController.setScene(subjectlistScene);

@@ -14,6 +14,8 @@ import java.util.Optional;
 
 public class EnrolmentController {
 
+
+    SubjectListController subjectListController;
     Student loginStudent;
     private Stage stage;
     private Scene previousScene;
@@ -25,6 +27,10 @@ public class EnrolmentController {
 
     public void setScene(Scene scene) {
         this.scene = scene;
+    }
+
+    public void setSubjectListController(SubjectListController subjectListController) {
+        this.subjectListController = subjectListController;
     }
 
     private void goBack() {
@@ -45,6 +51,7 @@ public class EnrolmentController {
         } else {
             try {
                 loginStudent.enrolRandomSubject(subjectList);
+                subjectListController.setLoginStudent(loginStudent);
                 displayErrorPopup("SUccesss", "SUccesss");
             } catch (Exception e) {
             }

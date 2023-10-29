@@ -37,6 +37,7 @@ public class SubjectListController implements Initializable {
             EnrolmentController enrolmentController = loader.getController();
             enrolmentController.setLoginStudent(loginStudent);
             enrolmentController.setStage(stage);
+            enrolmentController.setSubjectListController(this);
             Scene enrolmentScene = new Scene(root);
             enrolmentController.setScene(enrolmentScene);
             enrolmentController.setPreviousScene(scene);
@@ -71,7 +72,7 @@ public class SubjectListController implements Initializable {
     }
 
 
-    public void setDataFromLoginScene(Student student){
+    public void setLoginStudent(Student student){
         loginStudent = student;
         final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
         List<String> subjectIDList = subjectList.stream()
