@@ -1,7 +1,7 @@
 /* Set the background color and text color for the login page */
 .login-page {
     -fx-background-color: #99CCFF;
-    -fx-padding: 50px;
+    -fx-padding: 48px;
 }
 
 .emailField, passwordField{
