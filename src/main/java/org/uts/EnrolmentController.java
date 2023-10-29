@@ -18,7 +18,6 @@ public class EnrolmentController {
     private Scene scene;
 
     public void setStage(Stage stage) {
-        stage.setTitle("Enrol subjects");
         this.stage = stage;
     }
 

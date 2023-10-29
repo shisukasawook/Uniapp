@@ -53,7 +53,6 @@ public class SubjectListController implements Initializable {
     }
 
     public void setStage(Stage stage) {
-        stage.setTitle("Subject menu enrolment list");
         this.stage = stage;
     }
 
