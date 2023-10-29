@@ -20,8 +20,11 @@ public class Login extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent root = loader.load();
+        LoginController loginController = loader.getController();
+        loginController.setStage(primaryStage);
         primaryStage.setTitle("GUIUniApp");
-        primaryStage.setScene(new Scene(root, 300, 200));
+        Scene loginScene = new Scene(root, 300, 200);
+        primaryStage.setScene(loginScene);
         primaryStage.show();
     }
 }

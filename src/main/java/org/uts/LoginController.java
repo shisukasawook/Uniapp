@@ -29,6 +29,37 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
+    private Stage stage;
+    private Scene scene;
+    private Scene previousScene;
+
+    @FXML
+    private void goToSubjectScene(Student student) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("subjectlist.fxml"));
+            previousScene = stage.getScene();
+            SubjectListController subjectListController = loader.getController();
+            subjectListController.setDataFromLoginScene(student);
+
+            // Create a new stage for the next page
+            stage.setTitle("Subject menu enrolment list");
+            stage.setScene(new Scene(loader.load()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goBack() {
+        if (previousScene != null) {
+            stage.setScene(previousScene);
+        }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     @FXML
     private void loginButtonAction(ActionEvent event) {
         String enteredEmail = emailField.getText();
@@ -55,7 +86,8 @@ public class LoginController {
                 displayErrorPopup("Invalid Login Credentials", "The email or password you entered is incorrect.");
             }
             else {
-                navigateToNextPage(foundStudent);
+                //navigateToNextPage(foundStudent);
+                goToSubjectScene(foundStudent);
             }
         }
     }
@@ -88,7 +120,7 @@ public class LoginController {
 
             // Create a new stage for the next page
             Stage stage = new Stage();
-            stage.setTitle("Next Page");
+            stage.setTitle("Subject menu enrolment list");
             stage.setScene(new Scene(root));
             stage.show();
 

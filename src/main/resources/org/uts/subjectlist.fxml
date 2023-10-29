@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller="org.uts.SubjectListController" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="org.uts.SubjectListController" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" styleClass="login-page" stylesheets="@style.css">
     <children>
-        <ListView fx:id="subjectListView" layoutX="30.0" layoutY="30.0" prefHeight="340.0" prefWidth="540.0"/>
+        <Label layoutX="30.0" layoutY="10.0" text="Current Enrolment" />
+        <ListView fx:id="subjectListView" layoutX="30.0" layoutY="40.0" prefHeight="340.0" prefWidth="540.0"/>
     </children>
+    <HBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="3">
+        <Button styleClass="login-button" text="Enrol in subjects" onAction="#enrollButtonAction" />
+        <Button styleClass="login-button" text="Back" onAction="#backButtonAction" />
+    </HBox>
 </AnchorPane>
+
+
+
