@@ -31,12 +31,16 @@ public class Student extends User implements Serializable {
         this.enrolledSubjects = enrolledSubjects;
     }
 
-    public void enrolRandomSubject() {
+    public void enrolSubject() {
         final List<Subject> subjectList = getEnrolledSubjects();
         if (subjectList.size() == 4) {
             System.out.println(colorize("\t\tStudents are allowed to enrol in 4 subjects only", Attribute.RED_TEXT()));
             return;
         }
+        enrolRandomSubject(subjectList);
+    }
+
+    public void enrolRandomSubject(List<Subject> subjectList) {
         Subject subject = new Subject();
         subject.generateSubjectID();
         subject.generateSubjectMark();

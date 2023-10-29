@@ -7,13 +7,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import org.uts.model.Student;
+import org.uts.model.Subject;
 
+import java.util.List;
 import java.util.Optional;
 
 public class EnrolmentController {
 
+    Student loginStudent;
     private Stage stage;
-
     private Scene previousScene;
     private Scene scene;
 
@@ -37,11 +39,24 @@ public class EnrolmentController {
 
     @FXML
     private void enrolButtonAction(ActionEvent event) {
-
+        final List<Subject> subjectList = loginStudent.getEnrolledSubjects();
+        if (subjectList.size() == 4) {
+            displayErrorPopup("xxxxxxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxxxxx");
+        } else {
+            try {
+                loginStudent.enrolRandomSubject(subjectList);
+                displayErrorPopup("SUccesss", "SUccesss");
+            } catch (Exception e) {
+            }
+        }
     }
     @FXML
     private void backButtonAction(ActionEvent event) {
         goBack();
+    }
+
+    public void setLoginStudent(Student student) {
+        loginStudent = student;
     }
 
 

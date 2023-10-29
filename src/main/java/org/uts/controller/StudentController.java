@@ -157,7 +157,7 @@ public class StudentController {
     }
 
     private void enrolSubject(Student student) {
-        student.enrolRandomSubject();
+        student.enrolSubject();
     }
 
     private void removeSubject(Student student) {

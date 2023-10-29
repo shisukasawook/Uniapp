@@ -7,12 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.uts.controller.DatabaseController;
 
 import java.io.IOException;
 
 public class Login extends Application {
 
     public static void main(String[] args) {
+        DatabaseController.initialize();
         launch(args);
     }
 

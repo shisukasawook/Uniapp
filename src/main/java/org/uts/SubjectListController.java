@@ -35,7 +35,7 @@ public class SubjectListController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("enrolmentlist.fxml"));
             Parent root = loader.load();
             EnrolmentController enrolmentController = loader.getController();
-//          enrolmentController.setDataFromLoginScene(student);
+            enrolmentController.setLoginStudent(loginStudent);
             enrolmentController.setStage(stage);
             Scene enrolmentScene = new Scene(root);
             enrolmentController.setScene(enrolmentScene);
